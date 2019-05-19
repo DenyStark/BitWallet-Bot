@@ -1,5 +1,7 @@
 const { answers, keyboard } = require('../utils/answers');
 
+const db = require('../../db');
+
 class BotController {
   constructor(bot) {
     this.bot = bot;
@@ -9,10 +11,12 @@ class BotController {
     this.bot.sendMessage(conf);
   }
 
-  start(chat) {
+  async start(chat) {
     console.info('Start:', JSON.stringify(chat));
 
-    const { id, username } = chat;
+    const { id, username, id: chatId } = chat;
+    await db.users.add({ username, chatId });
+
     const text = answers('start', { username });
 
     /*eslint-disable camelcase */
