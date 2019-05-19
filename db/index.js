@@ -59,6 +59,7 @@ module.exports = {
     updateLastAction: request(buildSQL(users, 'update-last-action')),
   },
   subscriptions: {
+    get: getValue(request(buildSQL(subscriptions, 'get'))),
     getAll: getAll(request(buildSQL(subscriptions, 'get-all'))),
     add: request(buildSQL(subscriptions, 'add')),
     delete: request(buildSQL(subscriptions, 'delete')),

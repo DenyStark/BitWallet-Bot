@@ -1,4 +1,10 @@
 module.exports = (request, params) => ({
+  'get': `
+      SELECT array_agg(address) as "value"
+      FROM subscriptions
+      JOIN users USING(user_id)
+      WHERE username = '${params.username}';`,
+
   'get-all': `
       SELECT address, array_agg(chat_id) as "chats"
       FROM subscriptions
