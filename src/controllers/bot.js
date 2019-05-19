@@ -115,6 +115,25 @@ class BotController {
     this.sendMessage(conf);
   }
 
+  async list(chat) {
+    console.info('List:', JSON.stringify(chat));
+
+    const { id, username } = chat;
+    const list = await db.subscriptions.get({ username });
+
+    const text = answers('list', { list });
+
+    /*eslint-disable camelcase */
+    const conf = {
+      chat_id: id,
+      text,
+      reply_markup: keyboard,
+    };
+    /*eslint-enable camelcase */
+
+    this.sendMessage(conf);
+  }
+
   unknown(chat) {
     console.info('Unknown:', JSON.stringify(chat));
 

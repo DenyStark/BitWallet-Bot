@@ -6,6 +6,7 @@ const answers = (type, params) => ({
   'unsubscribe-wrong': 'Wrong address',
   'subscribe': 'Success',
   'unsubscribe': 'Success',
+  'list': `Your subscription list: \n ${params.list.join('\n')}`,
   'unknown': 'Unknown command.',
 }[type]);
 

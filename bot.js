@@ -18,6 +18,7 @@ const processCommand = (chat, command) => {
   switch (command) {
     case '/start': controller.start(chat); break;
     case '/subscribe': controller.requestSubscribe(chat); break;
+    case '/list': controller.list(chat); break;
     case '/unsubscribe': controller.requestUnsubscribe(chat); break;
     default: controller.unknown(chat);
   }
