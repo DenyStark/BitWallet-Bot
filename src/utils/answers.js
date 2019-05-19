@@ -1,5 +1,17 @@
-const fs = require('fs');
+const answers = (type, params) => ({
+  'start': `Hello ${params.username}. Wellcome to BitWallet bot.`,
+  'unknown': 'Unknown command.',
+}[type]);
 
-const answers = JSON.parse(fs.readFileSync('./src/data/answers.json', 'utf8'));
+/*eslint-disable camelcase */
+const keyboard = JSON.stringify({
+  resize_keyboard: true,
+  one_time_keyboard: true,
+  keyboard: [['/list'], ['/subscribe', '/unsubscribe']]
+});
+/*eslint-enable camelcase */
 
-module.exports = answers;
+module.exports = {
+  answers,
+  keyboard,
+};

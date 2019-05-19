@@ -1,4 +1,4 @@
-const answers = require('../utils/answers');
+const { answers, keyboard } = require('../utils/answers');
 
 class BotController {
   constructor(bot) {
@@ -10,13 +10,14 @@ class BotController {
   }
 
   start(chat) {
-    const { id } = chat;
-    const text = answers.start;
+    const { id, username } = chat;
+    const text = answers('start', { username });
 
     /*eslint-disable camelcase */
     const conf = {
       chat_id: id,
       text,
+      reply_markup: keyboard,
     };
     /*eslint-enable camelcase */
 
@@ -25,7 +26,7 @@ class BotController {
 
   unknownСommand(chat) {
     const { id } = chat;
-    const text = answers.unknown;
+    const text = answers('unknown', {});
 
     /*eslint-disable camelcase */
     const conf = {
