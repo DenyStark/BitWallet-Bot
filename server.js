@@ -1,6 +1,6 @@
 const { BOT_TITLE, BOT_USERNAME } = process.env;
 
-require('./src/workers/bot');
+require('./bot');
 
 console.info(`
   ${BOT_TITLE} bot started.
