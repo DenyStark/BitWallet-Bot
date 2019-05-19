@@ -8,7 +8,15 @@ class BotController {
     this.bot = bot;
   }
 
-  sendMessage(conf) {
+  sendMessage(chatId, text, isKeyboard = false) {
+    /*eslint-disable camelcase */
+    const conf = {
+      chat_id: chatId,
+      text,
+    };
+    if (isKeyboard) conf.reply_markup = keyboard;
+    /*eslint-enable camelcase */
+
     this.bot.sendMessage(conf);
   }
 
@@ -19,16 +27,7 @@ class BotController {
     await db.users.add({ username, chatId });
 
     const text = answers('start', { username });
-
-    /*eslint-disable camelcase */
-    const conf = {
-      chat_id: id,
-      text,
-      reply_markup: keyboard,
-    };
-    /*eslint-enable camelcase */
-
-    this.sendMessage(conf);
+    this.sendMessage(id, text, true);
   }
 
   async requestSubscribe(chat) {
@@ -38,15 +37,7 @@ class BotController {
     await db.users.updateLastAction({ username, action: 'subscribe' });
 
     const text = answers('request-subscribe', {});
-
-    /*eslint-disable camelcase */
-    const conf = {
-      chat_id: id,
-      text,
-    };
-    /*eslint-enable camelcase */
-
-    this.sendMessage(conf);
+    this.sendMessage(id, text);
   }
   async subscribe(chat, address) {
     console.info('Subscribe:', JSON.stringify(chat), address);
@@ -62,15 +53,7 @@ class BotController {
       text = answers('subscribe', {});
     }
 
-    /*eslint-disable camelcase */
-    const conf = {
-      chat_id: id,
-      text,
-      reply_markup: keyboard,
-    };
-    /*eslint-enable camelcase */
-
-    this.sendMessage(conf);
+    this.sendMessage(id, text, true);
   }
 
   async requestUnsubscribe(chat) {
@@ -80,15 +63,7 @@ class BotController {
     await db.users.updateLastAction({ username, action: 'unsubscribe' });
 
     const text = answers('request-unsubscribe', {});
-
-    /*eslint-disable camelcase */
-    const conf = {
-      chat_id: id,
-      text,
-    };
-    /*eslint-enable camelcase */
-
-    this.sendMessage(conf);
+    this.sendMessage(id, text);
   }
   async unsubscribe(chat, address) {
     console.info('Unsubscribe:', JSON.stringify(chat), address);
@@ -104,15 +79,7 @@ class BotController {
       text = answers('unsubscribe', {});
     }
 
-    /*eslint-disable camelcase */
-    const conf = {
-      chat_id: id,
-      text,
-      reply_markup: keyboard,
-    };
-    /*eslint-enable camelcase */
-
-    this.sendMessage(conf);
+    this.sendMessage(id, text, true);
   }
 
   async list(chat) {
@@ -122,16 +89,7 @@ class BotController {
     const list = await db.subscriptions.get({ username });
 
     const text = answers('list', { list });
-
-    /*eslint-disable camelcase */
-    const conf = {
-      chat_id: id,
-      text,
-      reply_markup: keyboard,
-    };
-    /*eslint-enable camelcase */
-
-    this.sendMessage(conf);
+    this.sendMessage(id, text, true);
   }
 
   unknown(chat) {
@@ -139,16 +97,7 @@ class BotController {
 
     const { id } = chat;
     const text = answers('unknown', {});
-
-    /*eslint-disable camelcase */
-    const conf = {
-      chat_id: id,
-      text,
-      reply_markup: keyboard,
-    };
-    /*eslint-enable camelcase */
-
-    this.sendMessage(conf);
+    this.sendMessage(id, text, true);
   }
 }
 
