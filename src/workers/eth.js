@@ -7,7 +7,7 @@ const utils = require('../utils/txs');
 const web3 = new Web3(PROVIDER);
 const eth = web3.eth;
 
-module.exports = (callback) => {
+module.exports = (observer) => {
   eth.subscribe('newBlockHeaders', error => {
     if (error) console.error(error);
   }).on('data', blockHeader => {
@@ -19,7 +19,7 @@ module.exports = (callback) => {
     eth.getBlock(number, true).then(data => {
       const { transactions, timestamp } = data;
       const txs = utils.toModel(transactions, timestamp);
-      callback(txs);
+      observer.processNewTxs(txs);
     });
   }).on('error', console.error);
 };

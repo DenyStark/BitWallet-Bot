@@ -1,11 +1,12 @@
 const toModel = (txs, timestamp) => {
+  const date = new Date();
   const toModelTxs = txs.map(tx => ({
     hash: tx.hash,
-    from: tx.from,
-    to: tx.to,
+    from: tx.from.toLowerCase(),
+    to: (tx.to || '').toLowerCase(),
     value: tx.value,
     fee: tx.gasPrice * tx.gas,
-    timestamp
+    date: date.setTime(timestamp),
   }));
   return toModelTxs;
 };

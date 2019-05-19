@@ -7,6 +7,7 @@ const answers = (type, params) => ({
   'subscribe': 'Success',
   'unsubscribe': 'Success',
   'list': `Your subscription list: \n ${(params.list || []).join('\n')}`,
+  'new-tx': `New transaction: \n ${JSON.stringify(params.tx)}`,
   'unknown': 'Unknown command.',
 }[type]);
 

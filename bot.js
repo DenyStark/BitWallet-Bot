@@ -4,6 +4,7 @@ const Telegram = require('telegram-bot-api');
 
 const messageUtils = require('./src/utils/messages');
 const BotController = require('./src/controllers/bot');
+const Observer = require('./src/controllers/observer');
 
 const ethWorker = require('./src/workers/eth');
 
@@ -15,7 +16,8 @@ const bot = new Telegram({
 });
 
 const controller = new BotController(bot);
-ethWorker(console.log);
+const observer = new Observer(bot);
+ethWorker(observer);
 
 const processCommand = (chat, command) => {
   switch (command) {
