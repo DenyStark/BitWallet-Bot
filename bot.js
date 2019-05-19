@@ -15,6 +15,7 @@ const bot = new Telegram({
 const controller = new BotController(bot);
 
 bot.on('message', (message) => {
+  console.info('New message:', JSON.stringify(message));
   const command = messageUtils.detectCommand(message);
 
   if (!command) return;
@@ -23,6 +24,6 @@ bot.on('message', (message) => {
 
   switch (command) {
     case '/start': controller.start(chat); break;
-    default: controller.unknownСommand(chat);
+    default: controller.unknown(chat);
   }
 });

@@ -10,6 +10,8 @@ class BotController {
   }
 
   start(chat) {
+    console.info('Start:', JSON.stringify(chat));
+
     const { id, username } = chat;
     const text = answers('start', { username });
 
@@ -24,7 +26,9 @@ class BotController {
     this.sendMessage(conf);
   }
 
-  unknownСommand(chat) {
+  unknown(chat) {
+    console.info('Unknown:', JSON.stringify(chat));
+
     const { id } = chat;
     const text = answers('unknown', {});
 
@@ -32,6 +36,7 @@ class BotController {
     const conf = {
       chat_id: id,
       text,
+      reply_markup: keyboard,
     };
     /*eslint-enable camelcase */
 
