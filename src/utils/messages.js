@@ -1,3 +1,5 @@
+const db = require('../../db');
+
 const detectCommand = (message) => {
   const { text, entities } = message;
 
@@ -8,6 +10,13 @@ const detectCommand = (message) => {
   return command;
 };
 
+const detectAction = async(message) => {
+  const username = message.chat.username;
+  const lastAction = await db.users.getLastAction({ username });
+  return lastAction;
+};
+
 module.exports = {
   detectCommand,
+  detectAction,
 };

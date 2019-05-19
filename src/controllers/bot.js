@@ -1,6 +1,7 @@
 const { answers, keyboard } = require('../utils/answers');
 
 const db = require('../../db');
+const eth = require('../utils/eth');
 
 class BotController {
   constructor(bot) {
@@ -18,6 +19,48 @@ class BotController {
     await db.users.add({ username, chatId });
 
     const text = answers('start', { username });
+
+    /*eslint-disable camelcase */
+    const conf = {
+      chat_id: id,
+      text,
+      reply_markup: keyboard,
+    };
+    /*eslint-enable camelcase */
+
+    this.sendMessage(conf);
+  }
+
+  async requestSubscribe(chat) {
+    console.info('Request subscribe:', JSON.stringify(chat));
+
+    const { id, username } = chat;
+    await db.users.updateLastAction({ username, action: 'subscribe' });
+
+    const text = answers('request-subscribe', {});
+
+    /*eslint-disable camelcase */
+    const conf = {
+      chat_id: id,
+      text,
+    };
+    /*eslint-enable camelcase */
+
+    this.sendMessage(conf);
+  }
+  async subscribe(chat, address) {
+    console.info('Subscribe:', JSON.stringify(chat));
+
+    const { id, username } = chat;
+    await db.users.updateLastAction({ username, action: 'start' });
+
+    let text = '';
+    if (!eth.isAddress(address)) {
+      text = answers('subscribe-wrong', {});
+    } else {
+      await db.subscriptions.add({ username, address });
+      text = answers('subscribe', {});
+    }
 
     /*eslint-disable camelcase */
     const conf = {

@@ -11,7 +11,7 @@ module.exports = (request, params) => ({
         SELECT user_id
         FROM users
         WHERE username = '${params.username}'
-      ), '${params.wallet}'
+      ), '${params.address}'
       ON CONFLICT DO NOTHING;`,
 
   'delete': `
@@ -21,5 +21,5 @@ module.exports = (request, params) => ({
           SELECT user_id
           FROM users
           WHERE username = '${params.username}'
-        ) AND address = '${params.wallet}';`,
+        ) AND address = '${params.address}';`,
 }[request]);

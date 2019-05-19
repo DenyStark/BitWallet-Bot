@@ -14,16 +14,31 @@ const bot = new Telegram({
 
 const controller = new BotController(bot);
 
-bot.on('message', (message) => {
+const processCommand = (chat, command) => {
+  switch (command) {
+    case '/start': controller.start(chat); break;
+    case '/subscribe': controller.requestSubscribe(chat); break;
+    default: controller.unknown(chat);
+  }
+};
+
+const processAction = (chat, text, action) => {
+  switch (action) {
+    case 'start': controller.unknown(chat); break;
+    case 'subscribe': controller.subscribe(chat, text); break;
+    default: controller.unknown(chat);
+  }
+};
+
+bot.on('message', async(message) => {
   console.info('New message:', JSON.stringify(message));
   const command = messageUtils.detectCommand(message);
 
-  if (!command) return;
+  const { chat, text } = message;
 
-  const { chat } = message;
-
-  switch (command) {
-    case '/start': controller.start(chat); break;
-    default: controller.unknown(chat);
+  if (command) processCommand(chat, command);
+  else {
+    const action = await messageUtils.detectAction(message);
+    processAction(chat, text, action);
   }
 });
