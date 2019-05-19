@@ -5,6 +5,13 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Mac files
+.DS_Store
+
+# pm2
+process.yml
+process.json
+
 # Runtime data
 pids
 *.pid
