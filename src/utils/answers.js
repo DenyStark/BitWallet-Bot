@@ -1,8 +1,11 @@
 const answers = (type, params) => ({
   'start': `Hello ${params.username}. Wellcome to BitWallet bot.`,
-  'request-subscribe': 'Input ETH address: ',
+  'request-subscribe': 'Input ETH address:',
+  'request-unsubscribe': 'Input ETH address:',
   'subscribe-wrong': 'Wrong address',
+  'unsubscribe-wrong': 'Wrong address',
   'subscribe': 'Success',
+  'unsubscribe': 'Success',
   'unknown': 'Unknown command.',
 }[type]);
 

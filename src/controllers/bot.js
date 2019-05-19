@@ -49,7 +49,7 @@ class BotController {
     this.sendMessage(conf);
   }
   async subscribe(chat, address) {
-    console.info('Subscribe:', JSON.stringify(chat));
+    console.info('Subscribe:', JSON.stringify(chat), address);
 
     const { id, username } = chat;
     await db.users.updateLastAction({ username, action: 'start' });
@@ -60,6 +60,48 @@ class BotController {
     } else {
       await db.subscriptions.add({ username, address });
       text = answers('subscribe', {});
+    }
+
+    /*eslint-disable camelcase */
+    const conf = {
+      chat_id: id,
+      text,
+      reply_markup: keyboard,
+    };
+    /*eslint-enable camelcase */
+
+    this.sendMessage(conf);
+  }
+
+  async requestUnsubscribe(chat) {
+    console.info('Request unsubscribe:', JSON.stringify(chat));
+
+    const { id, username } = chat;
+    await db.users.updateLastAction({ username, action: 'unsubscribe' });
+
+    const text = answers('request-unsubscribe', {});
+
+    /*eslint-disable camelcase */
+    const conf = {
+      chat_id: id,
+      text,
+    };
+    /*eslint-enable camelcase */
+
+    this.sendMessage(conf);
+  }
+  async unsubscribe(chat, address) {
+    console.info('Unsubscribe:', JSON.stringify(chat), address);
+
+    const { id, username } = chat;
+    await db.users.updateLastAction({ username, action: 'start' });
+
+    let text = '';
+    if (!eth.isAddress(address)) {
+      text = answers('unsubscribe-wrong', {});
+    } else {
+      await db.subscriptions.delete({ username, address });
+      text = answers('unsubscribe', {});
     }
 
     /*eslint-disable camelcase */
