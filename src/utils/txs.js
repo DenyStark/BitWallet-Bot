@@ -8,8 +8,8 @@ const toModel = (txs, timestamp) => {
     timestamp
   }));
   return toModelTxs;
-}
+};
 
 module.exports = {
   toModel,
-}
+};
