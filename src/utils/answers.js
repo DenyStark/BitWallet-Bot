@@ -1,11 +1,5 @@
 const utils = require('./eth');
 
-const toDate = (timestamp) => {
-  const date = new Date();
-  date.setTime(timestamp);
-  return date;
-};
-
 const answers = (type, params = {}) => ({
   'hello':
       `Hello *${params.username}*. Wellcome to BitWallet bot.`,
@@ -32,7 +26,7 @@ const answers = (type, params = {}) => ({
       value: ${utils.weiToEth(params.tx.value)} Eth
       fee: ${utils.weiToEth(params.tx.fee)} Eth
 
-      date: ${toDate(params.tx.date)}`.replace(/ {2}/g, ''),
+      date: ${utils.toDate(params.tx.date)}`.replace(/ {2}/g, ''),
   'unknown':
       'Unknown command.',
 }[type]);

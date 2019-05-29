@@ -2,7 +2,7 @@ const { PROVIDER, BLOCK_DELAY } = process.env;
 
 const Web3 = require('web3');
 
-const utils = require('../utils/txs');
+const utils = require('../utils/eth');
 
 const web3 = new Web3(PROVIDER);
 const eth = web3.eth;
@@ -18,7 +18,7 @@ module.exports = (observer) => {
 
     eth.getBlock(number, true).then(data => {
       const { transactions, timestamp } = data;
-      const txs = utils.toModel(transactions, timestamp);
+      const txs = utils.txsToModel(transactions, timestamp);
       observer.processNewTxs(txs);
     });
   }).on('error', console.error);
