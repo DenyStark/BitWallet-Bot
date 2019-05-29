@@ -3,6 +3,9 @@ const isAddress = (text) => {
   return regEx.test(text);
 };
 
+const weiToEth = (wei) => (wei / 10 ** 18).toFixed(6);
+
 module.exports = {
   isAddress,
+  weiToEth
 };

@@ -12,6 +12,7 @@ class BotController {
     /*eslint-disable camelcase */
     const conf = {
       chat_id: chatId,
+      parse_mode: 'Markdown',
       text,
     };
     if (isKeyboard) conf.reply_markup = keyboard;
@@ -26,7 +27,7 @@ class BotController {
     const { id, username, id: chatId } = chat;
     await db.users.add({ username, chatId });
 
-    const text = answers('start', { username });
+    const text = answers('hello', { username });
     this.sendMessage(id, text, true);
   }
 
@@ -47,10 +48,10 @@ class BotController {
 
     let text = '';
     if (!eth.isAddress(address)) {
-      text = answers('subscribe-wrong', {});
+      text = answers('wrong-address', {});
     } else {
       await db.subscriptions.add({ username, address });
-      text = answers('subscribe', {});
+      text = answers('success', {});
     }
 
     this.sendMessage(id, text, true);
@@ -73,10 +74,10 @@ class BotController {
 
     let text = '';
     if (!eth.isAddress(address)) {
-      text = answers('unsubscribe-wrong', {});
+      text = answers('wrong-address', {});
     } else {
       await db.subscriptions.delete({ username, address });
-      text = answers('unsubscribe', {});
+      text = answers('success', {});
     }
 
     this.sendMessage(id, text, true);

@@ -11,6 +11,7 @@ class Observer {
     /*eslint-disable camelcase */
     const conf = {
       chat_id: chatId,
+      parse_mode: 'Markdown',
       text,
     };
     /*eslint-enable camelcase */
