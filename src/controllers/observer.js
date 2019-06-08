@@ -1,4 +1,4 @@
-const { answers } = require('../utils/answers');
+const { newTxAnswer } = require('../utils/answers');
 
 const db = require('../../db');
 
@@ -13,6 +13,7 @@ class Observer {
       chat_id: chatId,
       parse_mode: 'Markdown',
       text,
+      disable_web_page_preview: 'true',
     };
     /*eslint-enable camelcase */
 
@@ -34,7 +35,7 @@ class Observer {
       const chatIds = (map.get(to) || []).concat(map.get(from) || []);
 
       for (const chatId of chatIds) {
-        const text = answers('new-tx', { tx });
+        const text = newTxAnswer({ tx });
         this.sendMessage(chatId, text);
       }
     }
