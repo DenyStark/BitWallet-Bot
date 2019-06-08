@@ -14,6 +14,7 @@ class BotController {
       chat_id: chatId,
       parse_mode: 'Markdown',
       text,
+      disable_web_page_preview: false,
     };
     if (isKeyboard) conf.reply_markup = keyboard;
     /*eslint-enable camelcase */
